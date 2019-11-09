@@ -21,8 +21,7 @@ end
 
 RSpec.configure do |config|
   # Read Files
-  Dir[File.join(File.dirname(__FILE__), "../lib/**/*.rb")].each { |f| require f }
-  Dir[File.join(File.dirname(__FILE__), "../app/**/*.rb")].each { |f| require f }
+  require './lib/file_loader.rb'
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

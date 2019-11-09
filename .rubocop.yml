@@ -35,3 +35,12 @@ Metrics/MethodLength:
 # 曖昧なRegexリテラルを許可
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
+
+# eval の許可
+convention:Security/Eval:
+  Exclude:
+  - "spec/unit/lib/route_spec.rb"
+
+convention:Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*_spec.rb"

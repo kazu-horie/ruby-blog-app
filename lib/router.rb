@@ -1,20 +1,18 @@
 class Router
-  attr_accessor :routes
-
   # Constructor
   #
-  # @param [Hash] routes
-  def initialize
-    @routes = Hash.new { |hash, key| hash[key] = [] }
-    File.open(File.join('./config', 'routes.rb')) { |f| instance_eval(f.read) }
+  # @param [String] routes_file_string
+  def initialize(routes_file_string)
+    @routes_file_string = routes_file_string
   end
 
-  def config
-    yield
-  end
+  def routes
+    unless @routes
+      @routes = Hash.new { |hash, key| hash[key] = [] }
+      instance_eval(@routes_file_string)
+    end
 
-  def get(path, options = {})
-    routes[:get] << Route.new(path: path, to: parse_to(options[:to]))
+    @routes
   end
 
   def route(path, http_method)
@@ -33,5 +31,13 @@ class Router
   def parse_to(to_str)
     controller_name, action_name = to_str.split('#')
     { controller_name: controller_name.capitalize, action_name: action_name }
+  end
+
+  def config(&block)
+    block.call
+  end
+
+  def get(path, options = {})
+    routes[:get] << Route.new(path: path, to: parse_to(options[:to]))
   end
 end
