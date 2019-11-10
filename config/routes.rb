@@ -1,3 +1,3 @@
 config do
-  get '/', to: 'hello#index'
+  get '/', to: 'blogs#index'
 end

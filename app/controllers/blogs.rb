@@ -1,9 +1,8 @@
 module Controller
-  class Hello < BaseController
+  class Blogs < BaseController
     def index
-      response.body = 'Hello World'
+      view('blogs/index', name: 'horie', age: '23')
       response.status_code = 200
-      response
     end
   end
 end

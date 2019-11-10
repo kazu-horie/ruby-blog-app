@@ -7,11 +7,13 @@ class Route
     @action_name     = to[:action_name]
   end
 
-  def controller
+  def controller_class
     Controller.const_get(controller_name)
   end
 
   def execute(env)
-    controller.new(env).send(action_name.to_sym)
+    controller = controller_class.new(env)
+    controller.send(action_name.to_sym)
+    controller.rack_response
   end
 end

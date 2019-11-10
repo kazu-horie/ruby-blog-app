@@ -14,8 +14,7 @@ class App
       env['REQUEST_METHOD'].downcase.to_sym
     )
     if route
-      response = route.execute(env)
-      response.rack_response
+      route.execute(env)
     else
       [404, {}, []]
     end

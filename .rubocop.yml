@@ -28,7 +28,7 @@ Style/FrozenStringLiteralComment:
 Style/Documentation:
   Enabled: false
 
-  # メソッド内の行数メトリクスチェックを無効
+# メソッド内の行数メトリクスチェックを無効
 Metrics/MethodLength:
   Enabled: false
 
@@ -36,11 +36,12 @@ Metrics/MethodLength:
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
 
-# eval の許可
-convention:Security/Eval:
-  Exclude:
-  - "spec/unit/lib/route_spec.rb"
-
-convention:Metrics/BlockLength:
+# 行数のメトリクスを無効
+Metrics/BlockLength:
   Exclude:
     - "spec/**/*_spec.rb"
+
+# eval の許可
+Security/Eval:
+  Exclude:
+  - "spec/unit/lib/route_spec.rb"

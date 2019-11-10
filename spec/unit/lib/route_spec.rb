@@ -4,7 +4,6 @@ RSpec.describe Route do
       module Controller
         class Test < ::BaseController
           def test
-            'action called'
           end
         end
       end
@@ -27,13 +26,14 @@ RSpec.describe Route do
 
   describe '#controller' do
     it 'コントローラ名が取得できること' do
-      expect(route.controller).to eq(Controller::Test)
+      expect(route.controller_class).to eq(Controller::Test)
     end
   end
 
   describe '#execute' do
     it 'コントローラのアクションメソッドが実行されること' do
-      expect(route.execute({})).to eq('action called')
+      expect(route.execute({}))
+        .to eq([200, { 'Content-Type' => 'text/html' }, ['']])
     end
   end
 end
