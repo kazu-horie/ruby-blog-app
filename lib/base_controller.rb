@@ -7,6 +7,10 @@ class BaseController
     @response = Response.new
   end
 
+  def params
+    request.params
+  end
+
   def view(template_name, params = {})
     params.each do |key, value|
       instance_variable_set("@#{key}", value)

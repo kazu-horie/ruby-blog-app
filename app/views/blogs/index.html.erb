@@ -3,7 +3,14 @@
 <head><meta charset="utf-8"></head>
 
 <body>
-  私の名前は<%= @name %>。年齢は<%= @age %>です。
+  <ul>
+    <% @articles.each do |article| %>
+      <li>
+        タイトル: <%= article.title %>
+        内容:<%= article.description %> 
+      </li>
+    <% end %>
+  </ul>
 </body>
 
 </html>
