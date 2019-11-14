@@ -1,0 +1,23 @@
+<html>
+
+<head><meta charset="utf-8"></head>
+
+<body>
+  <form method="post" action="/articles">
+    <p><label>
+      タイトル:
+      <input type="text" name="title" value="<%= @article.title %>">
+    </label></p>
+    <p>
+      内容:
+      <br/>
+      <textarea name="description" cols="30" rows="10"><%= @article.description %></textarea>
+    </p>
+    <input type="hidden" name="id" value=<%= @article.id %>>
+    <input type="hidden" name="_method" value="PUT">
+    <p>
+      <input type="submit" value="更新">
+    </p>
+</body>
+
+</html>

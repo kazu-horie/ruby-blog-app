@@ -3,9 +3,9 @@ module DAO
     attr_reader :client
 
     def articles_all
-      statement = <<-SQL
+      statement = %(
         SELECT * FROM articles
-      SQL
+      )
 
       results = client.query(statement)
 
@@ -21,10 +21,52 @@ module DAO
       articles
     end
 
-    def delete(id)
-      statement = client.prepare('DELETE FROM articles WHERE id = ?')
+    def article_by_id(id)
+      statement = client.prepare(%(
+        SELECT * FROM articles
+        WHERE id = ?
+      ))
+
+      result = statement.execute(id).first
+
+      article = DTO::Article.new(
+        result['id'],
+        result['title'],
+        result['description']
+      )
+
+      article
+    end
+
+    def destroy(id)
+      statement = client.prepare(%(
+        DELETE FROM articles
+        WHERE id = ?
+      ))
 
       statement.execute(id)
+    end
+
+    def create(title, description)
+      statement = client.prepare(%(
+        INSERT INTO articles(title, description)
+        VALUES(?, ?)
+      ))
+
+      statement.execute(title, description)
+    end
+
+    def update(id, title, description)
+      puts id
+      puts title
+      puts description
+      statement = client.prepare(%(
+        UPDATE articles
+        SET title = ?, description = ?
+        WHERE id = ?
+      ))
+
+      statement.execute(title, description, id)
     end
   end
 end

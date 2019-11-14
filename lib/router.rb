@@ -41,6 +41,14 @@ class Router
     routes[:get] << Route.new(path: path, to: parse_to(options[:to]))
   end
 
+  def post(path, options = {})
+    routes[:post] << Route.new(path: path, to: parse_to(options[:to]))
+  end
+
+  def put(path, options = {})
+    routes[:put] << Route.new(path: path, to: parse_to(options[:to]))
+  end
+
   def delete(path, options = {})
     routes[:delete] << Route.new(path: path, to: parse_to(options[:to]))
   end
