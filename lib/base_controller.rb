@@ -25,6 +25,13 @@ class BaseController
     response.status_code = 200
   end
 
+  def redirect_to(path:)
+    response.status_code = 302
+    response.headers.merge!(
+      'Location' => "http://#{request.env['HTTP_HOST']}/#{path}"
+    )
+  end
+
   def rack_response
     [response.status_code, response.headers, Array(response.body)]
   end

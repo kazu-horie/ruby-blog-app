@@ -3,11 +3,11 @@ module DAO
     attr_reader :client
 
     def articles_all
-      sql = <<-SQL
+      statement = <<-SQL
         SELECT * FROM articles
       SQL
 
-      results = client.query(sql)
+      results = client.query(statement)
 
       articles = []
       results.each do |row|
@@ -19,6 +19,12 @@ module DAO
       end
 
       articles
+    end
+
+    def delete(id)
+      statement = client.prepare('DELETE FROM articles WHERE id = ?')
+
+      statement.execute(id)
     end
   end
 end

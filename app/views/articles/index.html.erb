@@ -1,0 +1,22 @@
+<html>
+
+<head><meta charset="utf-8"></head>
+
+<body>
+  <ul>
+    <% @articles.each do |article| %>
+      <li>
+        タイトル: <%= article.title %>
+        内容:<%= article.description %>
+
+        <form method="post" action="/articles/delete">
+          <input type="hidden" name="article_id" value=<%= article.id %>>
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="submit" value="削除!">
+        </form>
+      </li>
+    <% end %>
+  </ul>
+</body>
+
+</html>
