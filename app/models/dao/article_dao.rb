@@ -57,9 +57,6 @@ module DAO
     end
 
     def update(id, title, description)
-      puts id
-      puts title
-      puts description
       statement = client.prepare(%(
         UPDATE articles
         SET title = ?, description = ?
