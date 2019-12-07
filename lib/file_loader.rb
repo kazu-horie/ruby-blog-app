@@ -1,6 +1,7 @@
 # Ruby / Gem package
 require 'rack'
 require 'mysql2'
+require 'bcrypt'
 require 'dotenv/load'
 
 # my Library

@@ -25,7 +25,7 @@ class BaseController
     response.status_code = 200
   end
 
-  def redirect_to(path:)
+  def redirect_to(path: nil)
     response.status_code = 302
     response.headers.merge!(
       'Location' => "http://#{request.env['HTTP_HOST']}/#{path}"

@@ -1,7 +1,7 @@
 module Controller
   class Articles < BaseController
     def index
-      articles = DAO::Article.new.articles_all
+      articles = DAO::Article.new.articles_with_user
 
       view('articles/index', articles: articles)
     end
@@ -13,12 +13,16 @@ module Controller
     end
 
     def new
-      view('articles/new')
+      users = DAO::User.new.users
+
+      view('articles/new', users: users)
     end
 
     def create
+      user = DAO::User.new.user_by_name(params['username'])
+
       DAO::Article.new.create(
-        params['title'], params['description']
+        user.id, params['title'], params['description']
       )
 
       redirect_to(path: :articles)
