@@ -1,10 +1,15 @@
 module DAO
   class Article < BaseDAO
+    include BCrypt
+
     attr_reader :client
 
-    def articles_all
+    def articles_with_user
       statement = %(
-        SELECT * FROM articles
+        SELECT *, articles.id as article_id
+        FROM articles
+        INNER JOIN users
+        ON articles.user_id = users.id
       )
 
       results = client.query(statement)
@@ -12,9 +17,15 @@ module DAO
       articles = []
       results.each do |row|
         articles << DTO::Article.new(
-          row['id'],
+          row['article_id'],
+          row['user_id'],
           row['title'],
-          row['description']
+          row['description'],
+          DTO::User.new(
+            row['user_id'],
+            row['name'],
+            row['password']
+          )
         )
       end
 
@@ -31,6 +42,7 @@ module DAO
 
       article = DTO::Article.new(
         result['id'],
+        result['user_id'],
         result['title'],
         result['description']
       )
@@ -47,13 +59,13 @@ module DAO
       statement.execute(id)
     end
 
-    def create(title, description)
+    def create(user_id, title, description)
       statement = client.prepare(%(
-        INSERT INTO articles(title, description)
-        VALUES(?, ?)
+        INSERT INTO articles(user_id, title, description)
+        VALUES(?, ?, ?)
       ))
 
-      statement.execute(title, description)
+      statement.execute(user_id, title, description)
     end
 
     def update(id, title, description)
